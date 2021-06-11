@@ -15,45 +15,24 @@
    */
 
   let numbers = {
-    ones:['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven','eight','nine'],
-    teens:['', 'eleven', 'twilve', 'thriteen', 'fourteen', 'fiveteen', 'sixteen', 'seventeen', 'eightteen','nineteen'],
-    tens:[ '', 'ten', 'tweny', 'thirty', 'fourty', 'fivety', 'sixty', 'seventy', 'eighty', 'ninty'],
-    hundred:['','one hundred', `two hundred`, `three hundred`, 'four hundred', 'five hundred', 'six hundred', 'seven hundred', 'eight hundred', 'nine hundred'],
-   
+    ones:['', 'one', 'two', 'three', 'four', 'five', 'six', 'seven','eight','nine'],
+    teens:['', 'eleven', 'twelve', 'thirteen', 'fourteen', 'fifteen', 'sixteen', 'seventeen', 'eighteen','nineteen'],
+    tens:[ '', 'ten', 'twenty', 'thirty', 'forty', 'fifty', 'sixty', 'seventy', 'eighty', 'ninety'],
+    hundreds:['','one hundred', `two hundred`, `three hundred`, 'four hundred', 'five hundred', 'six hundred', 'seven hundred', 'eight hundred', 'nine hundred'], 
 }
-
-let ones = ((num) =>{
-    return numbers['ones'][num]
-})
-
-let tens = ((num) => {
-    if(num >= 11 && num <= 19)
-        return numbers['teens'][num[0]]
-    else
-        return numbers['tens'][num[0]]
-
-})
-
-let hundreds = (() =>{
-    return numbers['hundreds'][num[2]]
-})
-
 
 let numToEng = ((num) => {
     num = num+''
-    let str = ''
-    let arr = [ones, tens, hundreds]
-
-    switch(num.length){
-        case 1:
-            return arr[0](num)
-        case 2:
-            return arr[1](num) + '' + arr[0](num)
-        case 3:
-            for(let i=0; i<num.length; i++)
-                str += ` ${arr[i](num)}`
-            return str
-    } 
+    if(num == 0)
+        return 'zero'
+    else if(num.length==1){
+        return numbers['ones'][num]
+    }else if(num.length==2 && num >= 11 && num  <= 19){
+        return numbers['teens'][num[1]]
+    }else if(num.length>2 && parseInt(num.slice(1,3)) >= 11 && parseInt(num.slice(1,3))  <= 19){
+        return ` ${numbers['hundreds'][num[0]]} ${numbers['teens'][num[2]]}`
+    }else{
+        return ` ${numbers['hundreds'][num[0]]} ${numbers['teens'][num[1]] } ${numbers['ones'][num[2]]}`
+    }
 })
-
-console.log(numToEng(20))
+console.log(numToEng(112))
